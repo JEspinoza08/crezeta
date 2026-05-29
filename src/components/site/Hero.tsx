@@ -4,7 +4,7 @@ import heroBg from "@/assets/hero-bg.jpg";
 
 const stats = [
   { value: "50+", label: "Proyectos realizados" },
-  { value: "2+", label: "Marcas Impulsadas" },
+  { value: "6+", label: "Marcas Impulsadas" },
   { value: "100%", label: "Experiencias optimizadas para SEO" },
 ];
 
