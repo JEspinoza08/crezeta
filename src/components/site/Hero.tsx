@@ -49,13 +49,13 @@ export function Hero() {
 
           <div className="mt-10 flex flex-wrap items-center gap-4">
             <a
-              href="#portfolio"
+              href="#portafolio"
               className="inline-flex items-center gap-2 rounded-full bg-gradient-primary px-7 py-3.5 text-sm font-medium text-primary-foreground hover-glow"
             >
               Ver Proyectos <ArrowUpRight className="h-4 w-4" />
             </a>
             <a
-              href="#contact"
+              href="#contacto"
               className="inline-flex items-center gap-2 rounded-full border border-border bg-surface/60 backdrop-blur px-7 py-3.5 text-sm font-medium text-foreground hover:border-primary/50 hover:bg-surface transition-colors"
             >
               <Play className="h-4 w-4" /> Hablemos

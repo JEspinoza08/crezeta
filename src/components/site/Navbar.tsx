@@ -89,7 +89,7 @@ export function Navbar() {
               onClick={() => setOpen(false)}
               className="mt-2 inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-medium bg-gradient-primary text-primary-foreground"
             >
-              <CalendarCheck className="h-4 w-4" /> Schedule a Meeting
+              <CalendarCheck className="h-4 w-4" /> Agendar una reunión
             </a>
           </ul>
         </div>
