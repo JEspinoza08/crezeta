@@ -34,7 +34,7 @@ export function About() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             {[
               { name: "Fundador · Ingeniero de Crecimiento Digital", img: team2, role: "Ingeniería & SEO" },
               { name: "Fundador · Arquitecto de Experiencia de Marca", img: team1, role: "Identidad & Dirección" },
@@ -43,13 +43,18 @@ export function About() {
                 key={i}
                 className="group relative rounded-3xl overflow-hidden border border-border bg-surface hover-glow"
               >
-                <div className="aspect-[4/5] overflow-hidden">
+                <div className="aspect-[4/5] sm:aspect-[4/5] overflow-hidden">
                   <img src={m.img} alt={m.name} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
                 </div>
-                <div className="absolute inset-x-0 bottom-0 p-5">
-                  <div className="text-xs uppercase tracking-widest text-primary-glow">{m.role}</div>
-                  <div className="mt-1 font-display text-base font-semibold leading-tight">{m.name}</div>
+                <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5 bg-gradient-to-t from-black/80 via-black/45 to-transparent">
+                  <div className="inline-flex rounded-full bg-white/15 backdrop-blur-md border border-white/20 px-3 py-1 text-[9px] sm:text-[10px] uppercase tracking-[0.18em] text-white font-semibold">
+  {m.role}
+</div>
+
+<div className="mt-3 font-display text-base sm:text-lg font-bold leading-tight text-white drop-shadow-lg">
+  {m.name}
+</div>
                 </div>
               </article>
             ))}

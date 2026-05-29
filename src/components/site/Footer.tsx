@@ -39,13 +39,8 @@ export function Footer() {
           </div>
 
           <div className="md:justify-self-end md:text-right">
-            <div className="text-xs uppercase tracking-widest text-muted-foreground mb-3">Redes</div>
+            <div className="text-xs uppercase tracking-widest text-muted-foreground mb-3">Inicio</div>
             <div className="flex md:justify-end items-center gap-2">
-              {[InstagramIcon, LinkedinIcon].map((Icon, i) => (
-                <a key={i} href="#" className="h-10 w-10 inline-flex items-center justify-center rounded-full border border-border bg-surface/60 hover:border-primary/60 transition-colors">
-                  <Icon className="h-4 w-4" />
-                </a>
-              ))}
               <a href="#inicio" className="h-10 w-10 inline-flex items-center justify-center rounded-full bg-gradient-primary text-primary-foreground hover-glow">
                 <ArrowUp className="h-4 w-4" />
               </a>

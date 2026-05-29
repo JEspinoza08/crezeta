@@ -1,6 +1,7 @@
 const brands = [
   "Marcia Vidal - marciavidal.com",
   "Cositas Lindas - cositaslindas.pe",
+  "EZD Cipreses - EZD.com.pe"
 ];
 
 export function Brands() {
