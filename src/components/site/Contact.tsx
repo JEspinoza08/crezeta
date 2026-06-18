@@ -87,7 +87,7 @@ ${proyecto}
             </a>
 
             <a
-              href="mailto:informes@crezeta.com"
+              href="mailto:crezetabg@gmail.com"
               className="flex items-center justify-between rounded-2xl border border-border bg-surface/60 px-5 py-4 hover-glow"
             >
               <span className="flex items-center gap-3">
@@ -98,7 +98,7 @@ ${proyecto}
                 <span>
                   <div className="text-sm text-muted-foreground">Email</div>
                   <div className="font-medium">
-                    informes@crezeta.com
+                    crezetabg@gmail.com
                   </div>
                 </span>
               </span>
