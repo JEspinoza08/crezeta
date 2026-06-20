@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://crezeta.pe/sitemap.xml
+Sitemap: https://www.crezeta.pe/sitemap.xml
