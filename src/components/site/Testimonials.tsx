@@ -3,21 +3,21 @@ import { Quote } from "lucide-react";
 const items = [
   {
     quote:
-      "CreZeta reconstruyó nuestra identidad y nuestra web en semanas. Las reservas crecieron en el primer trimestre y la marca finalmente se siente como nosotros.",
-    name: "Andrea M.",
-    role: "Founder, Lumière Events",
+      "100% satisfecha con la atención y el trabajo realizado. Las páginas web que me entregó son totalmente funcionales, eficientes y cumplen con todas mis expectativas. Además, siempre está buscando mejoras y nuevas formas de optimizar sus proyectos. Sin duda, recomiendo su trabajo por su compromiso, responsabilidad y excelente servicio.",
+    name: "Alexa Martinez",
+    role: "Fundadora, Cositas Lindas Perú",
   },
   {
     quote:
       "Atención boutique con calidad profesional. Su trabajo SEO nos ayudó a posicionarnos en la primera página para términos clave.",
-    name: "Daniel R.",
-    role: "CEO, Vertex Dental",
+    name: "Marcia Vidal",
+    role: "Fundadora, Marcia Vidal",
   },
   {
     quote:
       "Piensan como socios, no como proveedores. Estrategia, branding y tecnología bajo un mismo enfoque.",
-    name: "Camila S.",
-    role: "Director, Aurea Realty",
+    name: "EZD Cipreses",
+    role: "Fundador, EZD Cipreses",
   },
 ];
 
