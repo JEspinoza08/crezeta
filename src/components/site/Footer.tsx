@@ -31,7 +31,7 @@ export function Footer() {
             <div>
               <div className="text-xs uppercase tracking-widest text-muted-foreground mb-3">Contacto</div>
               <ul className="space-y-2 text-sm">
-                <li><a href="mailto:hello@crezeta.com" className="text-foreground/80 hover:text-foreground transition-colors">crezetabg@gmail.com</a></li>
+                <li><a href="mailto:crezetabg@gmail.com" className="text-foreground/80 hover:text-foreground transition-colors">crezetabg@gmail.com</a></li>
                 <li><a href="#contacto" className="text-foreground/80 hover:text-foreground transition-colors">WhatsApp</a></li>
                 <li><a href="#contacto" className="text-foreground/80 hover:text-foreground transition-colors">Agendar llamada</a></li>
               </ul>

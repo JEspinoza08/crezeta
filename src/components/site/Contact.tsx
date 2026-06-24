@@ -42,8 +42,8 @@ ${proyecto}
   };
 
   return (
-    <section id="contacto" className="relative py-32 bg-surface/30">
-      <div className="mx-auto max-w-7xl px-6 grid lg:grid-cols-2 gap-12">
+    <section id="contacto" className="relative py-24 bg-surface/30">
+      <div className="mx-auto max-w-7xl px-6 grid lg:grid-cols-2 gap-12 items-center">
         <div>
           <span className="text-xs uppercase tracking-[0.25em] text-primary-glow">
             08 — Contacto
@@ -105,31 +105,46 @@ ${proyecto}
             </a>
 
             <a
-              href="#"
-              className="flex items-center justify-between rounded-2xl border border-border bg-surface/60 px-5 py-4 hover-glow"
-            >
-              <span className="flex items-center gap-3">
-                <span className="h-10 w-10 inline-flex items-center justify-center rounded-xl bg-gradient-primary text-primary-foreground">
-                  <CalendarCheck className="h-4 w-4" />
-                </span>
+  href="https://www.instagram.com/crezeta.pe/"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="flex items-center justify-between rounded-2xl border border-border bg-surface/60 px-5 py-4 hover-glow"
+>
+  <span className="flex items-center gap-3">
+    <span className="h-10 w-10 inline-flex items-center justify-center rounded-xl bg-gradient-primary text-primary-foreground">
+      <InstagramIcon className="h-4 w-4" />
+    </span>
 
-                <span>
-                  <div className="text-sm text-muted-foreground">
-                    Agenda una llamada de 30 minutos
-                  </div>
+    <span>
+      <div className="text-sm text-muted-foreground">Instagram</div>
+      <div className="font-medium">@crezeta.pe</div>
+    </span>
+  </span>
+</a>
 
-                  <div className="font-medium">
-                    Calendario · Sesión de descubrimiento
-                  </div>
-                </span>
-              </span>
-            </a>
+<a
+  href="https://www.linkedin.com/company/crezeta-branding-growth"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="flex items-center justify-between rounded-2xl border border-border bg-surface/60 px-5 py-4 hover-glow"
+>
+  <span className="flex items-center gap-3">
+    <span className="h-10 w-10 inline-flex items-center justify-center rounded-xl bg-gradient-primary text-primary-foreground">
+      <LinkedinIcon className="h-4 w-4" />
+    </span>
+
+    <span>
+      <div className="text-sm text-muted-foreground">LinkedIn</div>
+      <div className="font-medium">CreZeta | Branding & Growth</div>
+    </span>
+  </span>
+</a>
           </div>
         </div>
 
         <form
           onSubmit={handleSubmit}
-          className="glass rounded-3xl p-7 sm:p-9 h-fit"
+          className="glass rounded-3xl p-7 sm:p-9 h-fit lg:translate-y-6"
         >
           <div className="grid sm:grid-cols-2 gap-4">
             <label className="block">
