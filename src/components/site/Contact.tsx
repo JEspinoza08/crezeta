@@ -5,18 +5,40 @@ import { InstagramIcon, LinkedinIcon } from "@/components/site/SocialIcons";
 export function Contact() {
   const [sent, setSent] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
 
-    const form = e.currentTarget;
-    const formData = new FormData(form);
+  const form = e.currentTarget;
+  const formData = new FormData(form);
 
-    const nombre = formData.get("nombre") as string;
-    const email = formData.get("email") as string;
-    const empresa = formData.get("empresa") as string;
-    const proyecto = formData.get("proyecto") as string;
+  const nombre = formData.get("nombre") as string;
+  const email = formData.get("email") as string;
+  const empresa = formData.get("empresa") as string;
+  const proyecto = formData.get("proyecto") as string;
 
-    const mensaje = `
+  const leadData = {
+    nombre,
+    email,
+    empresa: empresa || "No indicado",
+    proyecto,
+    origen: "crezeta.pe",
+    fecha: new Date().toISOString(),
+    estado: "Nuevo",
+  };
+
+  try {
+    await fetch("http://localhost:5678/webhook/9eb1eaea-0bf1-4bde-8870-10e1ffcf057b", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(leadData),
+    });
+  } catch (error) {
+    console.error("Error enviando lead al CRM:", error);
+  }
+
+  const mensaje = `
 Hola, deseo información sobre sus servicios.
 
 👤 Nombre: ${nombre}
@@ -27,19 +49,19 @@ Hola, deseo información sobre sus servicios.
 ${proyecto}
 `;
 
-    const whatsappUrl = `https://wa.me/51995772022?text=${encodeURIComponent(
-      mensaje
-    )}`;
+  const whatsappUrl = `https://wa.me/51995772022?text=${encodeURIComponent(
+    mensaje
+  )}`;
 
-    window.open(whatsappUrl, "_blank");
+  window.open(whatsappUrl, "_blank");
 
-    setSent(true);
-    form.reset();
+  setSent(true);
+  form.reset();
 
-    setTimeout(() => {
-      setSent(false);
-    }, 5000);
-  };
+  setTimeout(() => {
+    setSent(false);
+  }, 5000);
+};
 
   return (
     <section id="contacto" className="relative py-24 bg-surface/30">
