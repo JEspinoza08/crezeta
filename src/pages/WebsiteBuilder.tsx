@@ -1,0 +1,103 @@
+import { useMemo, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowLeft, ArrowRight, Check, ChevronRight, Desktop, Image as ImageIcon, Laptop, LayoutTemplate, MessageCircle, Palette, Rocket, ShoppingBag, Smartphone, Sparkles, Upload, X } from "lucide-react";
+import { Navbar } from "@/components/site/Navbar";
+import { Footer } from "@/components/site/Footer";
+import { FloatingWhatsApp } from "@/components/site/FloatingWhatsApp";
+
+type SiteType = "landing" | "corporativa" | "ecommerce";
+type PreviewMode = "desktop" | "mobile";
+
+type SectionKey = "hero" | "about" | "services" | "products" | "categories" | "testimonials" | "faq" | "contact" | "location" | "blog";
+
+const types: { id: SiteType; title: string; description: string; icon: typeof Rocket }[] = [
+  { id: "landing", title: "Landing Page", description: "Una página enfocada en presentar y convertir una oferta.", icon: Rocket },
+  { id: "corporativa", title: "Web Corporativa", description: "Presenta tu empresa, servicios, experiencia y canales de contacto.", icon: LayoutTemplate },
+  { id: "ecommerce", title: "E-commerce", description: "Muestra productos y construye una experiencia orientada a vender online.", icon: ShoppingBag },
+];
+
+const sectionOptions: { id: SectionKey; label: string; types: SiteType[] }[] = [
+  { id: "hero", label: "Portada / Banner", types: ["landing", "corporativa", "ecommerce"] },
+  { id: "about", label: "Nosotros", types: ["landing", "corporativa", "ecommerce"] },
+  { id: "services", label: "Servicios", types: ["landing", "corporativa"] },
+  { id: "products", label: "Productos destacados", types: ["ecommerce"] },
+  { id: "categories", label: "Categorías", types: ["ecommerce"] },
+  { id: "testimonials", label: "Testimonios", types: ["landing", "corporativa", "ecommerce"] },
+  { id: "faq", label: "Preguntas frecuentes", types: ["landing", "corporativa", "ecommerce"] },
+  { id: "blog", label: "Blog / Novedades", types: ["corporativa", "ecommerce"] },
+  { id: "location", label: "Ubicación", types: ["corporativa", "ecommerce"] },
+  { id: "contact", label: "Contacto", types: ["landing", "corporativa", "ecommerce"] },
+];
+
+const defaultSections: Record<SiteType, SectionKey[]> = {
+  landing: ["hero", "services", "testimonials", "contact"],
+  corporativa: ["hero", "about", "services", "testimonials", "contact"],
+  ecommerce: ["hero", "categories", "products", "testimonials", "contact"],
+};
+
+const styles = [
+  { id: "moderno", label: "Moderno", description: "Limpio, amplio y visual" },
+  { id: "minimalista", label: "Minimalista", description: "Simple y elegante" },
+  { id: "energetico", label: "Enérgico", description: "Contraste y personalidad" },
+];
+
+function MiniSection({ type, accent }: { type: SectionKey; accent: string }) {
+  const title: Record<SectionKey, string> = { hero: "", about: "Sobre nosotros", services: "Nuestros servicios", products: "Productos destacados", categories: "Explora por categoría", testimonials: "Lo que dicen nuestros clientes", faq: "Preguntas frecuentes", contact: "Hablemos", location: "Encuéntranos", blog: "Novedades" };
+  if (type === "hero") return null;
+  if (type === "products" || type === "categories") return <section className="px-[6%] py-[7%]"><h3 className="text-center text-[clamp(12px,2vw,26px)] font-bold">{title[type]}</h3><div className="mt-[5%] grid grid-cols-3 gap-[3%]">{[1,2,3].map(i=><div key={i} className="overflow-hidden rounded-[8px] border bg-white"><div className="aspect-square bg-slate-100"/><div className="p-[7%]"><div className="h-2 w-3/4 rounded bg-slate-200"/><div className="mt-2 h-2 w-1/2 rounded" style={{backgroundColor:accent}}/></div></div>)}</div></section>;
+  if (type === "testimonials") return <section className="bg-slate-50 px-[6%] py-[7%]"><h3 className="text-center text-[clamp(12px,2vw,26px)] font-bold">{title[type]}</h3><div className="mt-[5%] grid grid-cols-3 gap-[3%]">{[1,2,3].map(i=><div key={i} className="rounded-[8px] bg-white p-[7%] shadow-sm"><div className="h-2 w-full rounded bg-slate-200"/><div className="mt-2 h-2 w-4/5 rounded bg-slate-100"/><div className="mt-3 h-5 w-5 rounded-full" style={{backgroundColor:accent}}/></div>)}</div></section>;
+  if (type === "contact") return <section className="px-[6%] py-[8%] text-center text-white" style={{backgroundColor:accent}}><h3 className="text-[clamp(13px,2vw,28px)] font-bold">¿Listo para empezar?</h3><p className="mx-auto mt-2 max-w-md text-[clamp(7px,1vw,13px)] opacity-80">Conversemos sobre lo que tienes en mente.</p><div className="mx-auto mt-4 w-fit rounded-full bg-white px-5 py-2 text-[clamp(7px,1vw,12px)] font-semibold" style={{color:accent}}>Contáctanos</div></section>;
+  return <section className="px-[6%] py-[7%]"><h3 className="text-[clamp(12px,2vw,26px)] font-bold">{title[type]}</h3><div className="mt-[4%] grid grid-cols-2 gap-[5%]"><div><div className="h-2 w-full rounded bg-slate-200"/><div className="mt-2 h-2 w-5/6 rounded bg-slate-100"/><div className="mt-2 h-2 w-2/3 rounded bg-slate-100"/></div><div className="min-h-16 rounded-[8px] bg-slate-100"/></div></section>;
+}
+
+export function WebsiteBuilder() {
+  const [step, setStep] = useState(1);
+  const [siteType, setSiteType] = useState<SiteType>("corporativa");
+  const [sections, setSections] = useState<SectionKey[]>(defaultSections.corporativa);
+  const [brand, setBrand] = useState("Tu marca");
+  const [slogan, setSlogan] = useState("Creamos experiencias que conectan con tus clientes");
+  const [accent, setAccent] = useState("#6d35e8");
+  const [visualStyle, setVisualStyle] = useState("moderno");
+  const [logo, setLogo] = useState<string | null>(null);
+  const [banner, setBanner] = useState<string | null>(null);
+  const [previewMode, setPreviewMode] = useState<PreviewMode>("desktop");
+  const [quoteOpen, setQuoteOpen] = useState(false);
+
+  const availableSections = useMemo(() => sectionOptions.filter(s => s.types.includes(siteType)), [siteType]);
+  const chooseType = (type: SiteType) => { setSiteType(type); setSections(defaultSections[type]); };
+  const toggleSection = (id: SectionKey) => setSections(prev => prev.includes(id) ? prev.filter(s => s !== id) : [...prev, id]);
+  const upload = (file: File | undefined, setter: (value: string) => void) => { if (file) setter(URL.createObjectURL(file)); };
+
+  const quote = () => {
+    const typeLabel = types.find(t => t.id === siteType)?.title;
+    const sectionLabels = sections.map(id => sectionOptions.find(s => s.id === id)?.label).filter(Boolean).join(", ");
+    const styleLabel = styles.find(s => s.id === visualStyle)?.label;
+    const message = `Hola CreZeta 👋 Acabo de crear una propuesta en \"Diseña tu web\" y quisiera cotizarla.\n\n🌐 Tipo: ${typeLabel}\n🏷️ Marca: ${brand || "No indicada"}\n🎨 Estilo: ${styleLabel}\n🧩 Secciones: ${sectionLabels}\n\nQuisiera conversar sobre el diseño final y los requerimientos de mi proyecto.`;
+    window.open(`https://wa.me/51995772022?text=${encodeURIComponent(message)}`, "_blank");
+  };
+
+  return <div className="min-h-screen overflow-hidden bg-background"><Navbar/><main className="pt-24">
+    <section className="relative border-b border-border/70 px-6 pb-10 pt-10"><div className="absolute inset-0 -z-10 bg-hero"/><div className="mx-auto max-w-6xl text-center"><span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-white/70 px-4 py-2 text-xs font-semibold text-primary"><Sparkles className="h-3.5 w-3.5"/> EXPERIENCIA CREZETA</span><h1 className="mx-auto mt-5 max-w-4xl font-display text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">Dale forma a tu próxima <span className="text-gradient">página web</span></h1><p className="mx-auto mt-5 max-w-2xl text-base text-muted-foreground sm:text-lg">Elige lo que necesitas, personaliza tu marca y visualiza una propuesta inicial antes de conversar con nosotros.</p></div></section>
+
+    <section className="mx-auto max-w-6xl px-6 py-10 sm:py-14">
+      <div className="mb-10 flex items-center justify-center"><div className="flex w-full max-w-2xl items-center">{[1,2,3,4].map((n,i)=><div key={n} className="contents"><div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-bold transition ${step>=n?"bg-gradient-primary text-white":"border bg-white text-muted-foreground"}`}>{step>n?<Check className="h-4 w-4"/>:n}</div>{i<3&&<div className={`h-0.5 flex-1 ${step>n?"bg-primary":"bg-border"}`}/>}</div>)}</div></div>
+
+      <AnimatePresence mode="wait">
+        {step===1&&<motion.div key="s1" initial={{opacity:0,y:12}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-8}}><div className="text-center"><p className="text-xs font-semibold uppercase tracking-[.2em] text-primary">Paso 1 de 4</p><h2 className="mt-2 text-3xl font-semibold">¿Qué tipo de web tienes en mente?</h2><p className="mt-2 text-muted-foreground">No te preocupes, luego podremos aterrizar cada detalle contigo.</p></div><div className="mt-9 grid gap-5 md:grid-cols-3">{types.map(t=>{const Icon=t.icon;const active=siteType===t.id;return <button key={t.id} onClick={()=>chooseType(t.id)} className={`group rounded-3xl border p-7 text-left transition hover:-translate-y-1 hover:shadow-xl ${active?"border-primary bg-primary/5 shadow-lg shadow-primary/10":"bg-white"}`}><div className={`flex h-12 w-12 items-center justify-center rounded-2xl ${active?"bg-gradient-primary text-white":"bg-surface text-primary"}`}><Icon className="h-5 w-5"/></div><div className="mt-6 flex items-center justify-between"><h3 className="text-xl font-semibold">{t.title}</h3>{active&&<Check className="h-5 w-5 text-primary"/>}</div><p className="mt-2 text-sm leading-6 text-muted-foreground">{t.description}</p></button>})}</div></motion.div>}
+
+        {step===2&&<motion.div key="s2" initial={{opacity:0,y:12}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-8}}><div className="text-center"><p className="text-xs font-semibold uppercase tracking-[.2em] text-primary">Paso 2 de 4</p><h2 className="mt-2 text-3xl font-semibold">¿Qué quieres mostrar?</h2><p className="mt-2 text-muted-foreground">Selecciona las secciones que te gustaría visualizar en tu propuesta.</p></div><div className="mx-auto mt-9 grid max-w-4xl gap-3 sm:grid-cols-2">{availableSections.map(s=>{const active=sections.includes(s.id);return <button key={s.id} onClick={()=>toggleSection(s.id)} className={`flex items-center justify-between rounded-2xl border px-5 py-4 text-left transition ${active?"border-primary bg-primary/5":"bg-white hover:border-primary/40"}`}><span className="font-medium">{s.label}</span><span className={`flex h-6 w-6 items-center justify-center rounded-full border ${active?"border-primary bg-primary text-white":"border-border"}`}>{active&&<Check className="h-3.5 w-3.5"/>}</span></button>})}</div></motion.div>}
+
+        {step===3&&<motion.div key="s3" initial={{opacity:0,y:12}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-8}}><div className="text-center"><p className="text-xs font-semibold uppercase tracking-[.2em] text-primary">Paso 3 de 4</p><h2 className="mt-2 text-3xl font-semibold">Ponle la esencia de tu marca</h2><p className="mt-2 text-muted-foreground">Usaremos estos elementos únicamente para construir la vista previa.</p></div><div className="mx-auto mt-9 grid max-w-4xl gap-5 lg:grid-cols-2"><div className="space-y-5 rounded-3xl border bg-white p-6"><label className="block"><span className="text-sm font-medium">Nombre de tu marca</span><input value={brand} onChange={e=>setBrand(e.target.value)} className="mt-2 w-full rounded-xl border bg-background px-4 py-3 outline-none focus:border-primary" placeholder="Ej. Padel Store"/></label><label className="block"><span className="text-sm font-medium">Mensaje principal</span><input value={slogan} onChange={e=>setSlogan(e.target.value)} className="mt-2 w-full rounded-xl border bg-background px-4 py-3 outline-none focus:border-primary" placeholder="Tu propuesta de valor"/></label><div><span className="text-sm font-medium">Color principal</span><div className="mt-2 flex items-center gap-3 rounded-xl border bg-background p-3"><input type="color" value={accent} onChange={e=>setAccent(e.target.value)} className="h-9 w-12 cursor-pointer rounded border-0 bg-transparent"/><input value={accent} onChange={e=>setAccent(e.target.value)} className="min-w-0 flex-1 bg-transparent text-sm uppercase outline-none"/></div></div></div><div className="space-y-5 rounded-3xl border bg-white p-6"><div className="grid grid-cols-2 gap-3"><label className="cursor-pointer rounded-2xl border border-dashed p-5 text-center hover:border-primary"><Upload className="mx-auto h-5 w-5 text-primary"/><span className="mt-2 block text-sm font-medium">Subir logo</span><span className="mt-1 block text-xs text-muted-foreground">PNG, JPG o WEBP</span><input type="file" accept="image/*" className="hidden" onChange={e=>upload(e.target.files?.[0],setLogo)}/></label><label className="cursor-pointer rounded-2xl border border-dashed p-5 text-center hover:border-primary"><ImageIcon className="mx-auto h-5 w-5 text-primary"/><span className="mt-2 block text-sm font-medium">Subir banner</span><span className="mt-1 block text-xs text-muted-foreground">Imagen horizontal</span><input type="file" accept="image/*" className="hidden" onChange={e=>upload(e.target.files?.[0],setBanner)}/></label></div><div><span className="text-sm font-medium">Estilo visual</span><div className="mt-2 grid gap-2">{styles.map(s=><button key={s.id} onClick={()=>setVisualStyle(s.id)} className={`flex items-center justify-between rounded-xl border px-4 py-3 text-left ${visualStyle===s.id?"border-primary bg-primary/5":""}`}><span><span className="block text-sm font-medium">{s.label}</span><span className="text-xs text-muted-foreground">{s.description}</span></span>{visualStyle===s.id&&<Check className="h-4 w-4 text-primary"/>}</button>)}</div></div></div></div></motion.div>}
+
+        {step===4&&<motion.div key="s4" initial={{opacity:0,y:12}} animate={{opacity:1,y:0}}><div className="text-center"><p className="text-xs font-semibold uppercase tracking-[.2em] text-primary">Tu propuesta visual</p><h2 className="mt-2 text-3xl font-semibold">Así podría comenzar a verse tu web</h2><p className="mt-2 text-muted-foreground">Explora la maqueta en escritorio o móvil. El diseño final será personalizado.</p><div className="mt-5 inline-flex rounded-full border bg-white p-1"><button onClick={()=>setPreviewMode("desktop")} className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm ${previewMode==="desktop"?"bg-foreground text-white":"text-muted-foreground"}`}><Laptop className="h-4 w-4"/> Escritorio</button><button onClick={()=>setPreviewMode("mobile")} className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm ${previewMode==="mobile"?"bg-foreground text-white":"text-muted-foreground"}`}><Smartphone className="h-4 w-4"/> Móvil</button></div></div>
+        <div className={`mx-auto mt-8 overflow-hidden rounded-[28px] border-[8px] border-slate-900 bg-white shadow-2xl transition-all duration-500 ${previewMode==="desktop"?"max-w-5xl":"max-w-[390px]"}`}><div className="flex h-7 items-center gap-1.5 bg-slate-900 px-3"><span className="h-2 w-2 rounded-full bg-slate-600"/><span className="h-2 w-2 rounded-full bg-slate-600"/><span className="h-2 w-2 rounded-full bg-slate-600"/></div><div className="max-h-[650px] overflow-y-auto bg-white text-slate-900"><header className="flex items-center justify-between px-[5%] py-[3%]"><div className="flex items-center gap-2">{logo?<img src={logo} className="h-[clamp(20px,4vw,44px)] max-w-[120px] object-contain"/>:<><span className="h-6 w-6 rounded-md" style={{backgroundColor:accent}}/><strong className="text-[clamp(9px,1.5vw,17px)]">{brand||"Tu marca"}</strong></>}</div><div className="flex gap-3 text-[clamp(6px,1vw,11px)] text-slate-500"><span>Inicio</span><span>Nosotros</span><span>Contacto</span></div></header>{sections.includes("hero")&&<section className="relative flex min-h-[clamp(180px,35vw,430px)] items-center overflow-hidden px-[7%] py-[10%]" style={banner?{backgroundImage:`linear-gradient(90deg,rgba(15,23,42,.78),rgba(15,23,42,.18)),url(${banner})`,backgroundSize:"cover",backgroundPosition:"center"}:{background:`linear-gradient(135deg, ${accent}18, ${accent}45)`}}><div className={`relative z-10 max-w-[65%] ${banner?"text-white":""}`}><div className="text-[clamp(7px,1vw,12px)] font-semibold uppercase tracking-widest" style={!banner?{color:accent}:undefined}>{brand||"Tu marca"}</div><h1 className="mt-2 text-[clamp(18px,4vw,48px)] font-bold leading-[1.05]">{slogan||"Tu idea merece una gran web"}</h1><p className={`mt-3 text-[clamp(7px,1vw,13px)] ${banner?"text-white/75":"text-slate-500"}`}>Una experiencia pensada para presentar tu marca y conectar con tus clientes.</p><button className="mt-4 rounded-full px-5 py-2 text-[clamp(7px,1vw,12px)] font-semibold text-white" style={{backgroundColor:accent}}>Conocer más</button></div></section>}{sections.filter(s=>s!=="hero").map(s=><MiniSection key={s} type={s} accent={accent}/>)}</div></div>
+        <div className="mx-auto mt-8 max-w-3xl rounded-2xl border border-primary/20 bg-primary/5 p-5 text-center"><Sparkles className="mx-auto h-5 w-5 text-primary"/><p className="mt-2 text-sm font-semibold">Esta es una propuesta visual inicial</p><p className="mt-1 text-sm leading-6 text-muted-foreground">La vista previa busca ayudarte a imaginar cómo podría verse tu página. El diseño final será desarrollado y personalizado por CreZeta según los requerimientos, funcionalidades e identidad de tu negocio definidos durante nuestra reunión.</p></div><div className="mt-7 text-center"><button onClick={()=>setQuoteOpen(true)} className="inline-flex items-center gap-2 rounded-full bg-gradient-primary px-8 py-4 font-semibold text-white shadow-lg shadow-primary/20 transition hover:-translate-y-0.5"><MessageCircle className="h-5 w-5"/> Cotizar esta web <ChevronRight className="h-4 w-4"/></button></div></motion.div>}
+      </AnimatePresence>
+
+      <div className="mt-10 flex items-center justify-between border-t pt-6"><button disabled={step===1} onClick={()=>setStep(s=>Math.max(1,s-1))} className="inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-medium disabled:invisible"><ArrowLeft className="h-4 w-4"/> Atrás</button>{step<4&&<button onClick={()=>setStep(s=>Math.min(4,s+1))} className="inline-flex items-center gap-2 rounded-full bg-gradient-primary px-6 py-3 text-sm font-semibold text-white">{step===3?"Generar mi propuesta":"Continuar"}<ArrowRight className="h-4 w-4"/></button>}</div>
+    </section>
+  </main><Footer/><FloatingWhatsApp/>
+
+  <AnimatePresence>{quoteOpen&&<motion.div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/60 p-4 backdrop-blur-sm" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} onMouseDown={()=>setQuoteOpen(false)}><motion.div initial={{scale:.96,opacity:0,y:12}} animate={{scale:1,opacity:1,y:0}} exit={{scale:.96,opacity:0}} onMouseDown={e=>e.stopPropagation()} className="relative w-full max-w-lg rounded-3xl bg-white p-7 shadow-2xl sm:p-9"><button onClick={()=>setQuoteOpen(false)} className="absolute right-5 top-5 rounded-full bg-surface p-2"><X className="h-4 w-4"/></button><div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-primary text-white"><Sparkles className="h-5 w-5"/></div><h3 className="mt-5 text-2xl font-semibold">Tu idea ya está tomando forma 🚀</h3><p className="mt-3 text-sm leading-6 text-muted-foreground">Esta maqueta es una referencia visual inicial. En la reunión aterrizaremos tus objetivos, funcionalidades, contenido e identidad para desarrollar una propuesta completamente personalizada.</p><div className="mt-5 rounded-2xl bg-surface p-4 text-sm"><div className="flex justify-between gap-4"><span className="text-muted-foreground">Proyecto</span><strong>{types.find(t=>t.id===siteType)?.title}</strong></div><div className="mt-2 flex justify-between gap-4"><span className="text-muted-foreground">Marca</span><strong className="truncate">{brand||"No indicada"}</strong></div><div className="mt-2 flex justify-between gap-4"><span className="text-muted-foreground">Secciones</span><strong>{sections.length}</strong></div></div><button onClick={quote} className="mt-6 flex w-full items-center justify-center gap-2 rounded-full bg-gradient-primary px-6 py-3.5 font-semibold text-white"><MessageCircle className="h-4 w-4"/> Continuar cotización por WhatsApp</button><p className="mt-3 text-center text-xs text-muted-foreground">Te enviaremos a WhatsApp con el resumen de tu propuesta listo.</p></motion.div></motion.div>}</AnimatePresence>
+  </div>;
+}

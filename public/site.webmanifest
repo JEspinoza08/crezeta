@@ -1,0 +1,12 @@
+{
+  "name": "CreZeta | Branding & Growth",
+  "short_name": "CreZeta",
+  "description": "Agencia de desarrollo web, SEO, ecommerce y branding en Perú.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#7047EB",
+  "icons": [
+    { "src": "/favicon.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

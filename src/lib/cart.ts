@@ -1,0 +1,7 @@
+import { StoreProduct } from "@/data/storeDemo";
+export type CartItem = Pick<StoreProduct,"id"|"name"|"slug"|"price"|"image_url"|"stock"> & { quantity:number; programmed?:boolean };
+const KEY="crezeta_cart";
+export const getCart=():CartItem[]=>{try{return (JSON.parse(localStorage.getItem(KEY)||"[]") as CartItem[]).filter(x=>x.id&&!x.id.startsWith("demo-"))}catch{return[]}};
+export function addToCart(p:StoreProduct,qty=1,programmed=false){if(!p.id||p.id.startsWith("demo-")||p.stock<=0)return;const items=getCart();const i=items.findIndex(x=>x.id===p.id&&!!x.programmed===programmed);if(i>=0)items[i].quantity=Math.min(items[i].quantity+qty,Math.max(p.stock,1));else items.push({id:p.id,name:p.name+(programmed?" · Programado y vinculado":""),slug:p.slug,price:Number(p.price)+(programmed?20:0),image_url:p.image_url,stock:p.stock,quantity:qty,programmed});localStorage.setItem(KEY,JSON.stringify(items));window.dispatchEvent(new Event("crezeta-cart"));}
+export function updateCart(id:string,qty:number,programmed?:boolean){let items=getCart();items=qty<=0?items.filter(x=>!(x.id===id&&(programmed===undefined||!!x.programmed===programmed))):items.map(x=>x.id===id&&(programmed===undefined||!!x.programmed===programmed)?{...x,quantity:Math.min(qty,Math.max(x.stock,1))}:x);localStorage.setItem(KEY,JSON.stringify(items));window.dispatchEvent(new Event("crezeta-cart"));}
+export function cartCount(){return getCart().reduce((a,x)=>a+x.quantity,0)}
