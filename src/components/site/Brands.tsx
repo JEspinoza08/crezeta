@@ -12,14 +12,17 @@ const brands = [
   {
     name: "Marcia Vidal",
     logo: marciaLogo,
+    url: "https://marciavidal.com/",
   },
   {
     name: "Cositas Lindas",
     logo: cositasLogo,
+    url: "https://cositaslindas.pe/",
   },
   {
     name: "EZD Cipreses",
-    logo: ezdLogo
+    logo: ezdLogo,
+    url: "https://cipreses343.vercel.app/",
   },
 ];
 
